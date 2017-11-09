@@ -6,17 +6,7 @@ class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      items: [
-        {title: 'Section one', text: 'This is the first section.'},
-      ],
-      stack: [
-        {title: 'Section two', text: 'This is the second section.'},
-        {title: 'Section three', text: 'This is the third section.'},
-        {title: 'Section four', text: 'This is the fourth section.'},
-        {title: 'Section five', text: 'This is the fifth section.'},
-        {title: 'Section six', text: 'This is the sixth section.'},
-        {title: 'Section seven', text: 'This is the seventh section.'},
-      ],
+      
     };
   }
 

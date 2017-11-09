@@ -1,8 +1,36 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import { Provider } from 'react-redux';
+import { createStore, applyMiddleware } from 'redux';
+import { BrowserRouter, Route, Switch } from 'react-router-dom';
+import promise from 'redux-promise';
+
 import './index.css';
 import App from './App';
-import registerServiceWorker from './registerServiceWorker';
+import Login from './Login';
+import Header from './Header';
+import Welcome from './Welcome';
+import Banner from './Banner';
+import Form from './Form'
 
-ReactDOM.render(<App />, document.getElementById('root'));
-registerServiceWorker();
+import registerServiceWorker from './registerServiceWorker';
+import reducers from './reducers';
+
+const createStoreWithMiddleware = applyMiddleware(promise)(createStore);
+
+ReactDOM.render(
+  <Provider store={createStoreWithMiddleware(reducers)}>
+    <BrowserRouter>
+      <div>
+        <Header />
+        <Banner />
+        <Switch>
+          <Route path='/welcome' component={Welcome} />
+          <Route path='/form' component={Form} />
+          <Route path='/' component={Login} />
+        </Switch>
+      </div>
+    </BrowserRouter>
+  </Provider>
+  , document.getElementById('root'));
+// registerServiceWorker();

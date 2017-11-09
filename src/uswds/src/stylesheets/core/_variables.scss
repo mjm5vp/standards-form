@@ -7,6 +7,17 @@
 // If you want to override a variable, set that variable in one of your
 // own partials, then @import '{path/to/uswds/}core/variables'.
 
+// Neat Grid
+$neat-grid--page: (
+  columns: 12,
+  gutter: 44px,
+);
+$neat-grid--mobile: (
+  columns: 4,
+  gutter: 20px,
+  media: "(max-width: 480px)"
+);
+
 // Typography
 // Removing the !default from $em-base so we are not inheriting that
 // value from Bourbon.
