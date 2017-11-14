@@ -31,6 +31,7 @@ class Login extends Component {
     console.log('submit')
     const { username, password } = this.state
     this.props.logIn({ username, password })
+    this.props.history.push('/welcome')
   }
 
 
@@ -41,18 +42,18 @@ class Login extends Component {
           <legend className="usa-drop_text">Sign in</legend>
           <span>or <a href="javascript:void(0);">create an account</a></span>
 
-          <label for="sign-in-username">Username or email address</label>
+          <label htmlFor="sign-in-username">Username or email address</label>
           <input
             id="sign-in-username"
             name="username"
             type="text"
-            autocapitalize="off"
-            autocorrect="off"
+            autoCapitalize="off"
+            autoCorrect="off"
             value={this.state.username}
             onChange={text => this.handleUsernameChange(text)}
           />
 
-          <label for="sign-in-password">Password</label>
+          <label htmlFor="sign-in-password">Password</label>
           <input
             id="sign-in-password"
             name="password"
@@ -67,11 +68,9 @@ class Login extends Component {
               Show password</a>
           </p>
 
-          {/* <Link to='/welcome'> */}
-            <button className='usa-button' type='submit'>
+          <Link to='/welcome' className='usa-button' type='submit' onClick={this.onSubmit}>
               Sign In
-            </button>
-          {/* </Link> */}
+          </Link>
 
           <p><a href="javascript:void(0);" title="Forgot username">
             Forgot username?</a></p>

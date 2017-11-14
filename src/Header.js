@@ -1,14 +1,17 @@
 import React, { Component } from 'react';
 
+
 class Header extends Component {
   render() {
+    const flagSrc = '../public/favicon-57.png'
+
     return (
       // Gov banner BEGIN
       <div className="usa-banner">
         <div className="usa-accordion">
           <header className="usa-banner-header">
             <div className="usa-grid usa-banner-inner">
-            <img src="https://unpkg.com/uswds@1.0.0/dist/img/favicons/favicon-57.png" alt="U.S. flag" />
+            <img src="https://unpkg.com/uswds@1.0.0/dist/img/us_flag_small.png" alt="U.S." />
             <p>An official website of the United States government</p>
             <button className="usa-accordion-button usa-banner-button" aria-expanded="false" aria-controls="gov-banner">
               <span className="usa-banner-button-text">Here's how you know</span>

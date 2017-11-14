@@ -17,8 +17,8 @@ class Jumbotron extends Component {
 
             <a class="usa-hero-link" href="javascript:void(0)">Link to more about that priority</a>
 
-            <Link to='/form'>
-              <a class="usa-button usa-button-big" href="javascript:void(0)">Continue to Form</a>
+            <Link to='/form' class="usa-button usa-button-big">
+              Continue to Form
             </Link>
 
           </div>

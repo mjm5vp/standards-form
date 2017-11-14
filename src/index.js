@@ -11,7 +11,8 @@ import Login from './Login';
 import Header from './Header';
 import Welcome from './Welcome';
 import Banner from './Banner';
-import Form from './Form'
+import Form from './Form';
+import View from './View';
 
 import registerServiceWorker from './registerServiceWorker';
 import reducers from './reducers';
@@ -27,6 +28,7 @@ ReactDOM.render(
         <Switch>
           <Route path='/welcome' component={Welcome} />
           <Route path='/form' component={Form} />
+          <Route path='/view' component={View} />
           <Route path='/' component={Login} />
         </Switch>
       </div>

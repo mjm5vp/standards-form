@@ -1,41 +1,80 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
+import { connect } from 'react-redux';
+import { submitForm } from './actions';
 
 class Form extends Component {
+  constructor(props) {
+    super(props)
+    this.state = {
+      title: '',
+      firstName: '',
+      middleName: '',
+      lastName: '',
+      address1: '',
+      address2: '',
+      city: '',
+      st: ''
+    }
+  }
+
+  handleChange = (e) => {
+    console.log(e.target.name)
+    console.log(e.target.value)
+
+    this.setState({ [e.target.name]: e.target.value })
+  }
+
+  onSubmit = (e) => {
+    e.preventDefault();
+    console.log('submit')
+    const { title, firstName, middleName, lastName, address1, address2, city, st } = this.state
+    console.log(title)
+    console.log(firstName)
+    console.log(middleName)
+    console.log(lastName)
+    console.log(address1)
+    console.log(address2)
+    console.log(city)
+    console.log(st)
+    this.props.submitForm({ title, firstName, middleName, lastName, address1, address2, city, st })
+    this.props.history.push('/view')
+  }
+
   render() {
     return (
       <div>
-        <form class="usa-form">
+        <form class="usa-form" onSubmit={this.onSubmit}>
           <fieldset>
             <legend>Enter Information</legend>
             <label for="title" class="usa-input-optional">Title</label>
-            <input class="usa-input-tiny" id="title" name="title" type="text" />
+            <input value={this.state.title} class="usa-input-tiny" id="title" name="title" type="text" onChange={e => this.handleChange(e)}/>
 
-            <label for="first-name">First name</label>
-            <input id="first-name" name="first-name" type="text" required="" aria-required="true" />
+            <label for="firstName">First name</label>
+            <input value={this.state.firstName} id="first-name" name="firstName" type="text" required="" aria-required="true" onChange={e => this.handleChange(e)}/>
 
-            <label for="middle-name" class="usa-input-optional">Middle name</label>
-            <input id="middle-name" name="middle-name" type="text" />
+            <label for="middleName" class="usa-input-optional">Middle name</label>
+            <input value={this.state.middleName} id="middle-name" name="middleName" type="text" onChange={e => this.handleChange(e)}/>
 
-            <label for="last-name">Last name</label>
-            <input id="last-name" name="last-name" type="text" required="" aria-required="true" />
+            <label for="lastName">Last name</label>
+            <input value={this.state.lastName} id="last-name" name="lastName" type="text" required="" aria-required="true" onChange={e => this.handleChange(e)}/>
 
-            <label for="mailing-address-1">Street address 1</label>
-            <input id="mailing-address-1" name="mailing-address-1" type="text" />
+            <label for="address1">Street address 1</label>
+            <input value={this.state.address1} id="address1" name="address1" type="text" onChange={e => this.handleChange(e)}/>
 
-            <label for="mailing-address-2" class="usa-input-optional">
+            <label for="address2" class="usa-input-optional">
               Street address 2</label>
-            <input id="mailing-address-2" name="mailing-address-2" type="text" />
+            <input value={this.state.address2} id="address2" name="address2" type="text" onChange={e => this.handleChange(e)}/>
 
             <div>
               <div class="usa-input-grid usa-input-grid-medium">
                 <label for="city">City</label>
-                <input id="city" name="city" type="text" />
+                <input value={this.state.city} id="city" name="city" type="text" onChange={e => this.handleChange(e)}/>
               </div>
 
               <div class="usa-input-grid usa-input-grid-small">
                 <label for="state">State</label>
-                <select id="state" name="state">
+                <select value={this.state.state} id="st" name="st" onChange={e => this.handleChange(e)}>
                   <option value>- Select -</option>
                   <option value="AL">Alabama</option>
                   <option value="AK">Alaska</option>
@@ -98,6 +137,11 @@ class Form extends Component {
               </div>
             </div>
 
+            <button type="submit" className='usa-button' onClick={this.onSubmit}>
+              Submit
+            </button>
+
+
           </fieldset>
         </form>
       </div>
@@ -105,4 +149,4 @@ class Form extends Component {
   }
 }
 
-export default Form;
+export default connect(null, { submitForm })(Form);
