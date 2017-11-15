@@ -3628,8 +3628,7 @@ input[type=search] {
     top: 0;
     transition: all 0.2s ease-in-out; }
 
-body {
-  font: 100% Helvetica, sans-serif;
-  color: #333; }
+.view-div {
+  margin-top: 100px; }
 
 /*# sourceMappingURL=uswds.min.css.map */

@@ -6,6 +6,7 @@ import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import promise from 'redux-promise';
 
 import './index.css';
+import './uswds/dist/css/uswds.min.css'
 import App from './App';
 import Login from './Login';
 import Header from './Header';

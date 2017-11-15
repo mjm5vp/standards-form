@@ -43,17 +43,18 @@ class Form extends Component {
 
   render() {
     return (
-      <div>
-        <form class="usa-form" onSubmit={this.onSubmit}>
+
+      <div className='usa-grid'>
+        <form className="usa-form" onSubmit={this.onSubmit}>
           <fieldset>
             <legend>Enter Information</legend>
-            <label for="title" class="usa-input-optional">Title</label>
-            <input value={this.state.title} class="usa-input-tiny" id="title" name="title" type="text" onChange={e => this.handleChange(e)}/>
+            <label for="title" className="usa-input-optional">Title</label>
+            <input value={this.state.title} className="usa-input-tiny" id="title" name="title" type="text" onChange={e => this.handleChange(e)}/>
 
             <label for="firstName">First name</label>
             <input value={this.state.firstName} id="first-name" name="firstName" type="text" required="" aria-required="true" onChange={e => this.handleChange(e)}/>
 
-            <label for="middleName" class="usa-input-optional">Middle name</label>
+            <label for="middleName" className="usa-input-optional">Middle name</label>
             <input value={this.state.middleName} id="middle-name" name="middleName" type="text" onChange={e => this.handleChange(e)}/>
 
             <label for="lastName">Last name</label>
@@ -62,17 +63,17 @@ class Form extends Component {
             <label for="address1">Street address 1</label>
             <input value={this.state.address1} id="address1" name="address1" type="text" onChange={e => this.handleChange(e)}/>
 
-            <label for="address2" class="usa-input-optional">
+            <label for="address2" className="usa-input-optional">
               Street address 2</label>
             <input value={this.state.address2} id="address2" name="address2" type="text" onChange={e => this.handleChange(e)}/>
 
             <div>
-              <div class="usa-input-grid usa-input-grid-medium">
+              <div className="usa-input-grid usa-input-grid-medium">
                 <label for="city">City</label>
                 <input value={this.state.city} id="city" name="city" type="text" onChange={e => this.handleChange(e)}/>
               </div>
 
-              <div class="usa-input-grid usa-input-grid-small">
+              <div className="usa-input-grid usa-input-grid-small">
                 <label for="state">State</label>
                 <select value={this.state.state} id="st" name="st" onChange={e => this.handleChange(e)}>
                   <option value>- Select -</option>
@@ -137,7 +138,7 @@ class Form extends Component {
               </div>
             </div>
 
-            <button type="submit" className='usa-button' onClick={this.onSubmit}>
+            <button type="submit" classNameName='usa-button' onClick={this.onSubmit}>
               Submit
             </button>
 
