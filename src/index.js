@@ -14,6 +14,7 @@ import Welcome from './Welcome';
 import Banner from './Banner';
 import Form from './Form';
 import View from './View';
+import Footer from './Footer';
 
 import registerServiceWorker from './registerServiceWorker';
 import reducers from './reducers';
@@ -32,6 +33,7 @@ ReactDOM.render(
           <Route path='/view' component={View} />
           <Route path='/' component={Login} />
         </Switch>
+        <Footer />
       </div>
     </BrowserRouter>
   </Provider>

@@ -11,7 +11,7 @@ class Header extends Component {
         <div className="usa-accordion">
           <header className="usa-banner-header">
             <div className="usa-grid usa-banner-inner">
-            <img src="https://unpkg.com/uswds@1.0.0/dist/img/us_flag_small.png" alt="U.S." />
+            <img src="https://unpkg.com/uswds@1.0.0/dist/img/us_flag_small.png" alt="U.S. Flag" />
             <p>An official website of the United States government</p>
             <button className="usa-accordion-button usa-banner-button" aria-expanded="false" aria-controls="gov-banner">
               <span className="usa-banner-button-text">Here's how you know</span>

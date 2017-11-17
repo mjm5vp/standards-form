@@ -8,7 +8,6 @@ class Jumbotron extends Component {
         <div class="usa-grid">
           <div class="usa-hero-callout usa-section-dark">
             <h2>
-
                 <span class="usa-hero-callout-alt">Hero callout:</span>
 
               Call attention to a current priority
