@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "aws-sdk": "^2.153.0",
     "bourbon": "^4.3.4",
     "neat": "^1.2.2",
     "react": "^16.1.0",

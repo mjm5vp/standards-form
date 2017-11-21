@@ -1,7 +1,23 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
+import AWS from 'aws-sdk';
+
 import { submitForm } from './actions';
+
+AWS.config.update({
+  region: "us-east-1",
+  endpoint: 'https://dynamodb.us-east-1.amazonaws.com',
+  // accessKeyId default can be used while using the downloadable version of DynamoDB.
+  // For security reasons, do not store AWS Credentials in your files. Use Amazon Cognito instead.
+  accessKeyId: "AKIAJHMEUE45BM6KJIUQ",
+  // secretAccessKey default can be used while using the downloadable version of DynamoDB.
+  // For security reasons, do not store AWS Credentials in your files. Use Amazon Cognito instead.
+  secretAccessKey: "teuFqvNC43s+/3n/f4GJ5GyO5LHTA0PavK6WMHXX"
+});
+
+const dynamodb = new AWS.DynamoDB();
+const docClient = new AWS.DynamoDB.DocumentClient();
 
 class Form extends Component {
   constructor(props) {
@@ -18,6 +34,49 @@ class Form extends Component {
     }
   }
 
+  createTable() {
+      var params = {
+          TableName : "PeopleTable",
+          KeySchema: [
+              { AttributeName: "firstName", KeyType: "HASH"},
+              { AttributeName: "lastName", KeyType: "RANGE" }
+          ],
+          AttributeDefinitions: [
+              { AttributeName: "firstName", AttributeType: "N" },
+              { AttributeName: "lastName", AttributeType: "S" }
+          ],
+          ProvisionedThroughput: {
+              ReadCapacityUnits: 5,
+              WriteCapacityUnits: 5
+          }
+      };
+
+      dynamodb.createTable(params, function(err, data) {
+          if (err) {
+              document.getElementById('textarea').innerHTML = "Unable to create table: " + "\n" + JSON.stringify(err, undefined, 2);
+          } else {
+              document.getElementById('textarea').innerHTML = "Created table: " + "\n" + JSON.stringify(data, undefined, 2);
+          }
+      });
+  }
+
+  createItem = () => {
+      var params = {
+          TableName :"PeopleTable",
+          Item:{
+              "firstName": this.state.firstName,
+              "lastName": this.state.lastName,
+          }
+      };
+      docClient.put(params, function(err, data) {
+          if (err) {
+              document.getElementById('textarea').innerHTML = "Unable to add item: " + "\n" + JSON.stringify(err, undefined, 2);
+          } else {
+              document.getElementById('textarea').innerHTML = "PutItem succeeded: " + "\n" + JSON.stringify(data, undefined, 2);
+          }
+      });
+  }
+
   handleChange = (e) => {
     console.log(e.target.name)
     console.log(e.target.value)
@@ -29,14 +88,15 @@ class Form extends Component {
     e.preventDefault();
     console.log('submit')
     const { title, firstName, middleName, lastName, address1, address2, city, st } = this.state
-    console.log(title)
-    console.log(firstName)
-    console.log(middleName)
-    console.log(lastName)
-    console.log(address1)
-    console.log(address2)
-    console.log(city)
-    console.log(st)
+    // console.log(title)
+    // console.log(firstName)
+    // console.log(middleName)
+    // console.log(lastName)
+    // console.log(address1)
+    // console.log(address2)
+    // console.log(city)
+    // console.log(st)
+    this.createItem();
     this.props.submitForm({ title, firstName, middleName, lastName, address1, address2, city, st })
     this.props.history.push('/view')
   }

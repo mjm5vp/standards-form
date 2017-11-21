@@ -6,54 +6,17 @@
     <link rel="shortcut icon" href="%PUBLIC_URL%/favicon.ico">
     <!-- <link rel="stylesheet" href="https://federalist.fr.cloud.gov/preview/18f/web-design-standards/feature-event-delegation/dist/css/uswds.min.css"> -->
     <!-- <link rel="stylesheet" href='./src/uswds/dist/css/uswds.min.css'> -->
-
+    <script src="https://federalist.fr.cloud.gov/preview/18f/web-design-standards/feature-event-delegation/dist/js/uswds.min.js"></script>
+    <script src="https://sdk.amazonaws.com/js/aws-sdk-2.7.16.min.js"></script>
     <title>Standards Test React</title>
   </head>
   <body>
     <div id="root">
       <!-- this is where the React app is mounted -->
     </div>
-    <script src="https://federalist.fr.cloud.gov/preview/18f/web-design-standards/feature-event-delegation/dist/js/uswds.min.js"></script>
-    <script src="https://sdk.amazonaws.com/js/aws-sdk-2.7.16.min.js"></script>
+
     <script>
-    AWS.config.update({
-      region: "us-west-2",
-      endpoint: 'http://localhost:8000',
-      // accessKeyId default can be used while using the downloadable version of DynamoDB.
-      // For security reasons, do not store AWS Credentials in your files. Use Amazon Cognito instead.
-      accessKeyId: "AKIAJHMEUE45BM6KJIUQ",
-      // secretAccessKey default can be used while using the downloadable version of DynamoDB.
-      // For security reasons, do not store AWS Credentials in your files. Use Amazon Cognito instead.
-      secretAccessKey: "teuFqvNC43s+/3n/f4GJ5GyO5LHTA0PavK6WMHXX"
-    });
 
-    var dynamodb = new AWS.DynamoDB();
-
-    function createMovies() {
-        var params = {
-            TableName : "Movies",
-            KeySchema: [
-                { AttributeName: "year", KeyType: "HASH"},
-                { AttributeName: "title", KeyType: "RANGE" }
-            ],
-            AttributeDefinitions: [
-                { AttributeName: "year", AttributeType: "N" },
-                { AttributeName: "title", AttributeType: "S" }
-            ],
-            ProvisionedThroughput: {
-                ReadCapacityUnits: 5,
-                WriteCapacityUnits: 5
-            }
-        };
-
-        dynamodb.createTable(params, function(err, data) {
-            if (err) {
-                document.getElementById('textarea').innerHTML = "Unable to create table: " + "\n" + JSON.stringify(err, undefined, 2);
-            } else {
-                document.getElementById('textarea').innerHTML = "Created table: " + "\n" + JSON.stringify(data, undefined, 2);
-            }
-        });
-    }
 
     </script>
     <input id="createTableButton" type="button" value="Create Table" onclick="createMovies();" />
