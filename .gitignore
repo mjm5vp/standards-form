@@ -9,6 +9,9 @@
 # production
 /build
 
+# credentials
+/.aws
+
 # misc
 .DS_Store
 .env.local

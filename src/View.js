@@ -10,7 +10,7 @@ class View extends Component {
     return (
       <div className='usa-grid view-div'>
         <p>Name: {title} {firstName} {lastName}</p>
-        <p>Address: {address1}, {address2}</p>
+        <p>Address: {address1} {address2}</p>
         <p>City: {city}</p>
         <p>State: {st}</p>
       </div>

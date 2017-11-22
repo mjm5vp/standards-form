@@ -4,20 +4,27 @@ import { connect } from 'react-redux';
 import AWS from 'aws-sdk';
 
 import { submitForm } from './actions';
+import { accessKeyId, secretAccessKey } from '~/.aws/credentials';
 
 AWS.config.update({
   region: "us-east-1",
   endpoint: 'https://dynamodb.us-east-1.amazonaws.com',
   // accessKeyId default can be used while using the downloadable version of DynamoDB.
   // For security reasons, do not store AWS Credentials in your files. Use Amazon Cognito instead.
-  accessKeyId: "AKIAJHMEUE45BM6KJIUQ",
+  accessKeyId,
   // secretAccessKey default can be used while using the downloadable version of DynamoDB.
   // For security reasons, do not store AWS Credentials in your files. Use Amazon Cognito instead.
-  secretAccessKey: "teuFqvNC43s+/3n/f4GJ5GyO5LHTA0PavK6WMHXX"
+  secretAccessKey
+});
+
+AWS.config.credentials = new AWS.CognitoIdentityCredentials({
+IdentityPoolId: "us-east-1:a6daaf57-5a40-46f2-8acc-ac2ecb1c9569",
+RoleArn: "arn:aws:iam::123456789012:role/Cognito_DynamoPoolUnauth"
 });
 
 const dynamodb = new AWS.DynamoDB();
 const docClient = new AWS.DynamoDB.DocumentClient();
+
 
 class Form extends Component {
   constructor(props) {
@@ -36,7 +43,7 @@ class Form extends Component {
 
   createTable() {
       var params = {
-          TableName : "PeopleTable",
+          TableName : "Vertical-Apps",
           KeySchema: [
               { AttributeName: "firstName", KeyType: "HASH"},
               { AttributeName: "lastName", KeyType: "RANGE" }
@@ -53,26 +60,38 @@ class Form extends Component {
 
       dynamodb.createTable(params, function(err, data) {
           if (err) {
-              document.getElementById('textarea').innerHTML = "Unable to create table: " + "\n" + JSON.stringify(err, undefined, 2);
+              console.log("Unable to create table: " + "\n" + JSON.stringify(err, undefined, 2));
           } else {
-              document.getElementById('textarea').innerHTML = "Created table: " + "\n" + JSON.stringify(data, undefined, 2);
+              console.log("Created table: " + "\n" + JSON.stringify(data, undefined, 2));
           }
       });
   }
 
   createItem = () => {
+    const { title, firstName, middleName, lastName, address1, address2, city, st } = this.state
+
+    const opTitle = title === '' ? ' ' : title
+    const opMiddleName = middleName === '' ? ' ' : middleName
+    const opAddress2 = address2 === '' ? ' ' : address2
+
       var params = {
-          TableName :"PeopleTable",
+          TableName :"Vertical-Apps",
           Item:{
-              "firstName": this.state.firstName,
-              "lastName": this.state.lastName,
+              opTitle,
+              firstName,
+              opMiddleName,
+              lastName,
+              address1,
+              opAddress2,
+              city,
+              st
           }
       };
       docClient.put(params, function(err, data) {
           if (err) {
-              document.getElementById('textarea').innerHTML = "Unable to add item: " + "\n" + JSON.stringify(err, undefined, 2);
+              console.log("Unable to add item: " + "\n" + JSON.stringify(err, undefined, 2));
           } else {
-              document.getElementById('textarea').innerHTML = "PutItem succeeded: " + "\n" + JSON.stringify(data, undefined, 2);
+              console.log("PutItem succeeded: " + "\n" + JSON.stringify(data, undefined, 2));
           }
       });
   }
@@ -88,14 +107,7 @@ class Form extends Component {
     e.preventDefault();
     console.log('submit')
     const { title, firstName, middleName, lastName, address1, address2, city, st } = this.state
-    // console.log(title)
-    // console.log(firstName)
-    // console.log(middleName)
-    // console.log(lastName)
-    // console.log(address1)
-    // console.log(address2)
-    // console.log(city)
-    // console.log(st)
+
     this.createItem();
     this.props.submitForm({ title, firstName, middleName, lastName, address1, address2, city, st })
     this.props.history.push('/view')
@@ -108,33 +120,33 @@ class Form extends Component {
         <form className="usa-form" onSubmit={this.onSubmit}>
           <fieldset>
             <legend>Enter Information</legend>
-            <label for="title" className="usa-input-optional">Title</label>
+            <label htmlFor="title" className="usa-input-optional">Title</label>
             <input value={this.state.title} className="usa-input-tiny" id="title" name="title" type="text" onChange={e => this.handleChange(e)}/>
 
-            <label for="firstName">First name</label>
+            <label htmlFor="firstName">First name</label>
             <input value={this.state.firstName} id="first-name" name="firstName" type="text" required="" aria-required="true" onChange={e => this.handleChange(e)}/>
 
-            <label for="middleName" className="usa-input-optional">Middle name</label>
+            <label htmlFor="middleName" className="usa-input-optional">Middle name</label>
             <input value={this.state.middleName} id="middle-name" name="middleName" type="text" onChange={e => this.handleChange(e)}/>
 
-            <label for="lastName">Last name</label>
+            <label htmlFor="lastName">Last name</label>
             <input value={this.state.lastName} id="last-name" name="lastName" type="text" required="" aria-required="true" onChange={e => this.handleChange(e)}/>
 
-            <label for="address1">Street address 1</label>
+            <label htmlFor="address1">Street address 1</label>
             <input value={this.state.address1} id="address1" name="address1" type="text" onChange={e => this.handleChange(e)}/>
 
-            <label for="address2" className="usa-input-optional">
+            <label htmlFor="address2" className="usa-input-optional">
               Street address 2</label>
             <input value={this.state.address2} id="address2" name="address2" type="text" onChange={e => this.handleChange(e)}/>
 
             <div>
               <div className="usa-input-grid usa-input-grid-medium">
-                <label for="city">City</label>
+                <label htmlFor="city">City</label>
                 <input value={this.state.city} id="city" name="city" type="text" onChange={e => this.handleChange(e)}/>
               </div>
 
               <div className="usa-input-grid usa-input-grid-small">
-                <label for="state">State</label>
+                <label htmlFor="st">State</label>
                 <select value={this.state.state} id="st" name="st" onChange={e => this.handleChange(e)}>
                   <option value>- Select -</option>
                   <option value="AL">Alabama</option>
@@ -198,7 +210,7 @@ class Form extends Component {
               </div>
             </div>
 
-            <button type="submit" classNameName='usa-button' onClick={this.onSubmit}>
+            <button type="submit" className='usa-button' onClick={this.onSubmit}>
               Submit
             </button>
 

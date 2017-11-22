@@ -51,7 +51,7 @@ class Footer extends Component {
             <div className="usa-sign_up-block usa-width-one-third">
               <h3 className="usa-sign_up-header">Sign up</h3>
 
-              <label className="" for="email" id="">Your email address</label>
+              <label className="" htmlFor="email" id="">Your email address</label>
               <input id="email" name="email" type="email" />
 
               <button type="submit">Sign up</button>

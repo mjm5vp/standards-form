@@ -14,12 +14,14 @@
     "redux": "^3.7.2",
     "redux-form": "^7.1.2",
     "redux-promise": "^0.5.3",
+    "traverse": "^0.6.6",
     "uswds": "^1.4.2"
   },
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test --env=jsdom",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "build-and-deploy": "npm run build && s3cmd sync build/* s3://vertical-apps-form && echo '🚀  Deployed!'"
   }
 }
