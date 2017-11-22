@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import AWS from 'aws-sdk';
 
 import { submitForm } from './actions';
-import { accessKeyId, secretAccessKey } from '~/.aws/credentials';
+import { accessKeyId, secretAccessKey } from '../.aws/credentials';
 
 AWS.config.update({
   region: "us-east-1",
