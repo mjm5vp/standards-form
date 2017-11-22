@@ -10,7 +10,7 @@
 /build
 
 # credentials
-/.aws
+/src/.aws
 
 # misc
 .DS_Store

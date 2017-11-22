@@ -4,23 +4,24 @@ import { connect } from 'react-redux';
 import AWS from 'aws-sdk';
 
 import { submitForm } from './actions';
-import { accessKeyId, secretAccessKey } from '../.aws/credentials';
+import { accessKeyId, secretAccessKey } from './.aws/credentials';
+
 
 AWS.config.update({
   region: "us-east-1",
   endpoint: 'https://dynamodb.us-east-1.amazonaws.com',
   // accessKeyId default can be used while using the downloadable version of DynamoDB.
   // For security reasons, do not store AWS Credentials in your files. Use Amazon Cognito instead.
-  accessKeyId,
+  accessKeyId: accessKeyId,
   // secretAccessKey default can be used while using the downloadable version of DynamoDB.
   // For security reasons, do not store AWS Credentials in your files. Use Amazon Cognito instead.
-  secretAccessKey
+  secretAccessKey: secretAccessKey
 });
 
-AWS.config.credentials = new AWS.CognitoIdentityCredentials({
-IdentityPoolId: "us-east-1:a6daaf57-5a40-46f2-8acc-ac2ecb1c9569",
-RoleArn: "arn:aws:iam::123456789012:role/Cognito_DynamoPoolUnauth"
-});
+// AWS.config.credentials = new AWS.CognitoIdentityCredentials({
+// IdentityPoolId: "us-east-1:a6daaf57-5a40-46f2-8acc-ac2ecb1c9569",
+// RoleArn: "arn:aws:iam::123456789012:role/Cognito_DynamoPoolUnauth"
+// });
 
 const dynamodb = new AWS.DynamoDB();
 const docClient = new AWS.DynamoDB.DocumentClient();
