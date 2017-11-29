@@ -3,8 +3,8 @@ import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import AWS from 'aws-sdk';
 
-import { submitForm } from './actions';
-import { accessKeyId, secretAccessKey } from './.aws/credentials';
+import { submitForm } from '../actions';
+import { accessKeyId, secretAccessKey } from '../.aws/credentials';
 
 
 AWS.config.update({
@@ -35,6 +35,9 @@ class Form extends Component {
       firstName: '',
       middleName: '',
       lastName: '',
+      dobMonth: '',
+      dobDay: '',
+      dobYear: '',
       address1: '',
       address2: '',
       city: '',
@@ -44,7 +47,7 @@ class Form extends Component {
 
   createTable() {
       var params = {
-          TableName : "Vertical-Apps",
+          TableName : "Vertical-Apps-2",
           KeySchema: [
               { AttributeName: "firstName", KeyType: "HASH"},
               { AttributeName: "lastName", KeyType: "RANGE" }
@@ -69,23 +72,31 @@ class Form extends Component {
   }
 
   createItem = () => {
-    const { title, firstName, middleName, lastName, address1, address2, city, st } = this.state
+    const { title, firstName, middleName, lastName, dobMonth, dobDay, dobYear, address1, address2, city, st, zip } = this.state
 
     const opTitle = title === '' ? ' ' : title
     const opMiddleName = middleName === '' ? ' ' : middleName
     const opAddress2 = address2 === '' ? ' ' : address2
 
+    const primaryKey = firstName + lastName + dobMonth + dobDay + dobYear
+    console.log(`primaryKey: ${primaryKey}`)
+
       var params = {
-          TableName :"Vertical-Apps",
+          TableName :"Vertical-Apps-2",
           Item:{
+              primaryKey,
               opTitle,
               firstName,
               opMiddleName,
               lastName,
+              dobMonth,
+              dobDay,
+              dobYear,
               address1,
               opAddress2,
               city,
-              st
+              st,
+              zip
           }
       };
       docClient.put(params, function(err, data) {
@@ -107,11 +118,16 @@ class Form extends Component {
   onSubmit = (e) => {
     e.preventDefault();
     console.log('submit')
-    const { title, firstName, middleName, lastName, address1, address2, city, st } = this.state
+    const { title, firstName, middleName, lastName, dobMonth, dobDay, dobYear, address1, address2, city, st, zip } = this.state
 
-    this.createItem();
-    this.props.submitForm({ title, firstName, middleName, lastName, address1, address2, city, st })
-    this.props.history.push('/view')
+    if ( firstName && lastName && dobMonth && dobDay && dobYear && address1 && city && st && zip) {
+      this.createItem();
+      this.props.submitForm({ title, firstName, middleName, lastName, dobMonth, dobDay, dobYear, address1, address2, city, st, zip })
+      this.props.history.push('/view')
+    } else {
+      console.log('data missing')
+    }
+
   }
 
   render() {
@@ -133,7 +149,23 @@ class Form extends Component {
             <label htmlFor="lastName">Last name</label>
             <input value={this.state.lastName} id="last-name" name="lastName" type="text" required="" aria-required="true" onChange={e => this.handleChange(e)}/>
 
-            <label htmlFor="address1">Street address 1</label>
+            <label htmlFor='date_of_birth_1'>Date of birth</label>
+            <div className="usa-date-of-birth dob-div">
+              <div className="usa-form-group usa-form-group-month">
+                <label htmlFor="date_of_birth_1">Month</label>
+                <input className="usa-input-inline" aria-describedby="dobHint" id="date_of_birth_1" name="dobMonth" type="number" min="1" max="12" value={this.state.dobMonth} onChange={e => this.handleChange(e)}/>
+              </div>
+              <div className="usa-form-group usa-form-group-day">
+                <label htmlFor="date_of_birth_2">Day</label>
+                <input className="usa-input-inline" aria-describedby="dobHint" id="date_of_birth_2" name="dobDay" type="number" min="1" max="31" value={this.state.dobDay} onChange={e => this.handleChange(e)}/>
+              </div>
+              <div className="usa-form-group usa-form-group-year">
+                <label htmlFor="date_of_birth_3">Year</label>
+                <input className="usa-input-inline" aria-describedby="dobHint" id="date_of_birth_3" name="dobYear" type="number" min="1900" max="2000" value={this.state.dobYear} onChange={e => this.handleChange(e)}/>
+              </div>
+            </div>
+
+            <label className='usa-input' htmlFor="address1">Street address 1</label>
             <input value={this.state.address1} id="address1" name="address1" type="text" onChange={e => this.handleChange(e)}/>
 
             <label htmlFor="address2" className="usa-input-optional">
@@ -209,6 +241,12 @@ class Form extends Component {
                   <option value="AP">AP - Armed Forces Pacific</option>
                 </select>
               </div>
+
+              <div className="usa-input-grid usa-input-grid-medium">
+                <label htmlFor="zip">City</label>
+                <input value={this.state.zip} id="zip" name="zip" type="text" onChange={e => this.handleChange(e)}/>
+              </div>
+
             </div>
 
             <button type="submit" className='usa-button' onClick={this.onSubmit}>

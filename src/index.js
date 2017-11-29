@@ -5,18 +5,18 @@ import { createStore, applyMiddleware } from 'redux';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import promise from 'redux-promise';
 
-import './index.css';
-import './uswds/dist/css/uswds.min.css'
-import App from './App';
-import Login from './Login';
-import Header from './Header';
-import Welcome from './Welcome';
-import Banner from './Banner';
-import Form from './Form';
-import View from './View';
-import Footer from './Footer';
+import './styles/index.css';
+import './uswds/dist/css/uswds.min.css';
 
-import registerServiceWorker from './registerServiceWorker';
+import Login from './pages/Login';
+import Welcome from './pages/Welcome';
+import Form from './pages/Form';
+import View from './pages/View';
+import Header from './components/Header';
+import Banner from './components/Banner';
+import Footer from './components/Footer';
+
+import registerServiceWorker from './other/registerServiceWorker';
 import reducers from './reducers';
 
 const createStoreWithMiddleware = applyMiddleware(promise)(createStore);

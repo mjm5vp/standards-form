@@ -1,5 +1,4 @@
 import React from 'react';
-import logo from './logo.svg';
 
 export default props => {
   const {children} = props;
