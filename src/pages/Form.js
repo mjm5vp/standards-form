@@ -165,7 +165,7 @@ class Form extends Component {
               </div>
             </div>
 
-            <label className='usa-input' htmlFor="address1">Street address 1</label>
+            <label className='usa-input address-label' htmlFor="address1">Street address 1</label>
             <input value={this.state.address1} id="address1" name="address1" type="text" onChange={e => this.handleChange(e)}/>
 
             <label htmlFor="address2" className="usa-input-optional">
@@ -242,17 +242,16 @@ class Form extends Component {
                 </select>
               </div>
 
-              <div className="usa-input-grid usa-input-grid-medium">
-                <label htmlFor="zip">City</label>
+              <button type="submit" className='usa-button' onClick={this.onSubmit}>
+                Submit
+              </button>
+
+              <div className="usa-input-grid usa-input-grid-small">
+                <label htmlFor="zip">Zip</label>
                 <input value={this.state.zip} id="zip" name="zip" type="text" onChange={e => this.handleChange(e)}/>
               </div>
 
             </div>
-
-            <button type="submit" className='usa-button' onClick={this.onSubmit}>
-              Submit
-            </button>
-
 
           </fieldset>
         </form>

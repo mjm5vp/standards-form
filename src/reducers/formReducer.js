@@ -6,7 +6,8 @@ const INITIAL_STATE = {
   address1: '',
   address2: '',
   city: '',
-  st: ''
+  st: '',
+  zip: ''
 }
 
 export default function(state = INITIAL_STATE, action) {
